@@ -25,7 +25,7 @@
 
 (define (line x) (- x 1))
 
-(define l (cons 1 '(2 3)))
+(define l (cons 1 '(2 3 4)))
 
 (cons 1 '(2 3 4))
 (list 1 2 3 4)
@@ -72,3 +72,35 @@
     ((/ (- (f x) (f (- x dx))) dx))
     )
   fPrime)
+
+(define (insertAt x i l)
+  (define (insAt x i l)
+    (cond ( (= i 0) (cons x l) )
+          ( (null? l) (list x) )
+          ( else (cons (car l) (insAt x (- i 1) (cdr l)) )))
+    )
+  (cond ( (< i 1) (cons x l) )
+        ( (>= i (length l)) (append l (list x)) )
+        ( else (insAt x i l) )
+        ))
+
+(define (range a b)
+  (if (> a b) '() (cons a (range (+ a 1) b))))
+
+(define (insertAll x l)
+  (map (lambda (i) (insertAt x i l)) (range 0 (length l))))
+
+(define (permutations l)
+  (if (null? l) '( () )
+      (apply append (map (lambda (p) (insertAll (car l) p)) (permutations (cdr l))))
+      ))
+
+(define (take n l)
+  (cond ( (<= n 0) '() )
+        ( (>= n (length l)) l)
+        ( else (cons (car l) (take (- n 1) (cdr l))) )
+        ))
+
+(define (takeAll n l)
+  (if (>= n (length l)) (list l)
+      (cons (take n l) (takeAll n (cdr l)))))
