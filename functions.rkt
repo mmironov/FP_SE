@@ -104,3 +104,6 @@
 (define (takeAll n l)
   (if (>= n (length l)) (list l)
       (cons (take n l) (takeAll n (cdr l)))))
+
+(define (sublists l)
+  (cons '() (apply append (map (lambda (i) (takeAll i l)) (range 1 (length l))))))
