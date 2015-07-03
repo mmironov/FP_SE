@@ -95,11 +95,11 @@
       (apply append (map (lambda (p) (insertAll (car l) p)) (permutations (cdr l))))
       ))
 
-(define (take n l)
+{--(define (take n l)
   (cond ( (<= n 0) '() )
         ( (>= n (length l)) l)
         ( else (cons (car l) (take (- n 1) (cdr l))) )
-        ))
+        ))--}
 
 (define (takeAll n l)
   (if (>= n (length l)) (list l)
